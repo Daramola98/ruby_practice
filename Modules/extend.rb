@@ -14,7 +14,7 @@ module Tracking
       instance.name == name
     end
   end
-  end
+end
 
 class Customer
   extend Tracking

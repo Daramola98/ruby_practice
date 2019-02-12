@@ -1,5 +1,5 @@
-require "./contact"
-require "yaml"
+require './contact'
+require 'yaml'
 
 class AddressBook
   attr_reader :contacts
@@ -11,12 +11,12 @@ class AddressBook
 
   def run
     loop do
-      puts "Address Book"
-      puts "a: Add contact"
-      puts "p: Print contact list"
-      puts "s: Search"
-      puts "e: Exit"
-      print "Enter your choice: "
+      puts 'Address Book'
+      puts 'a: Add contact'
+      puts 'p: Print contact list'
+      puts 's: Search'
+      puts 'e: Exit'
+      print 'Enter your choice: '
       input = gets.chomp.downcase
       case input
       when 'a'
@@ -24,7 +24,7 @@ class AddressBook
       when 'p'
         print_contact_list
       when 's'
-        print "Search term"
+        print 'Search term'
         query = gets.chomp
         find_by_name query
         find_by_address query
@@ -37,51 +37,51 @@ class AddressBook
   end
 
   def open
-    @contacts = YAML.load_file("contacts.yml") if File.exist? "contacts.yml"
+    @contacts = YAML.load_file('contacts.yml') if File.exist? 'contacts.yml'
   end
 
   def save
-    File.open("contacts.yml", "w") do |file|
+    File.open('contacts.yml', 'w') do |file|
       file.write(contacts.to_yaml)
     end
   end
 
   def add_contact
     contact = Contact.new
-    print "First Name: "
+    print 'First Name: '
     contact.first_name = gets.chomp
-    print "Middle Name: "
+    print 'Middle Name: '
     contact.middle_name = gets.chomp
-    print "Last Name: "
+    print 'Last Name: '
     contact.last_name = gets.chomp
 
     loop do
-      puts "Add phone numbers or address"
-      puts "p: Add Phone number"
-      puts "a: Add Address"
-      puts "(Any other key to go back)"
+      puts 'Add phone numbers or address'
+      puts 'p: Add Phone number'
+      puts 'a: Add Address'
+      puts '(Any other key to go back)'
       response = gets.chomp.downcase
       case response
       when 'p'
         phone = PhoneNumber.new
-        print "Phone Number Kind(Home, Work, etc): "
+        print 'Phone Number Kind(Home, Work, etc): '
         phone.kind = gets.chomp
-        print "Number: "
+        print 'Number: '
         phone.number = gets.chomp
         contact.phone_numbers.push(phone)
       when 'a'
         address = Address.new
-        print "Address Kind(Home, Work, etc): "
+        print 'Address Kind(Home, Work, etc): '
         address.kind = gets.chomp
-        print "Address line 1: "
+        print 'Address line 1: '
         address.street_1 = gets.chomp
-        print "Address line 2: "
+        print 'Address line 2: '
         address.street_2 = gets.chomp
-        print "City: "
+        print 'City: '
         address.city = gets.chomp
-        print "State: "
+        print 'State: '
         address.state = gets.chomp
-        print "Postal Code: "
+        print 'Postal Code: '
         address.postal_code = gets.chomp
         contact.addresses.push(address)
       else
@@ -113,10 +113,10 @@ class AddressBook
 
   def find_by_phone_number(number)
     results = []
-    search = number.delete("-", "")
+    search = number.delete('-', '')
     contacts.each do |contact|
       contact.phone_numbers.each do |phone_number|
-        if phone_number.number.delete("-", "").include?(search)
+        if phone_number.number.delete('-', '').include?(search)
           results.push(contact) unless results.include?(contact)
         end
       end
@@ -138,7 +138,7 @@ class AddressBook
   end
 
   def print_contact_list
-    puts "Contact List"
+    puts 'Contact List'
     contacts.each do |contact|
       puts contact.to_s('last_first')
     end
